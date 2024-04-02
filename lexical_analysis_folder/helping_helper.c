@@ -79,5 +79,5 @@ char	*replace_chars(char *string)
 	char	*new_string;
 
 	new_string = add_spaces_around_symbols(string);
-	return ((free(string), new_string));
+	return (new_string);
 }

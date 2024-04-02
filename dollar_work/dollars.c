@@ -27,12 +27,12 @@ char	*extract_content_parenthes(char *str)
 		end_brace = ft_strchr(start_brace + 1, '}');
 		if (end_brace)
 		{
-			content = malloc(end_brace - start_brace);
+			content = malloc(end_brace - start_brace);//qui vediamo qunati char da allocare.
 			if (content == NULL)
 				return (perror("Error: malloc"), NULL);
 			my_strncpy(content, start_brace + 1, end_brace - start_brace - 1);
 			content[end_brace - start_brace - 1] = '\0';
-			return (content);
+			return (free(str), content);
 		}
 	}
 	return (str);
@@ -142,12 +142,12 @@ char	*find_and_expand_vars(char *str, char **env)
 				var_name_with_dollar = malloc(strlen(var_name) + 2);
 				var_name_with_dollar[0] = '$';
 				strcpy(var_name_with_dollar + 1, var_name);
-				new_str = replace_substr(str, var_name_with_dollar, var_value);
+				new_str = replace_substr(str, var_name_with_dollar, var_value);//new_str sarebbe la sostituzione del nome della variabile con il suo valore str = da "a/z"
 				free(var_name_with_dollar);
-				free(str);
 				str = new_str;
-				free(var_value);
+				free(new_str);
 			}
+			free(var_value);
 			free(var_name);
 		}
 		i++;

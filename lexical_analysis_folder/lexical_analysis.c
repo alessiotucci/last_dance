@@ -105,3 +105,5 @@ t_list_of_tok	*lexer(char *string, char **env)
 	//free_string_array(line_of_commands);
 	return (token_head);
 }
+
+//lexer = una sorta di main di questa patte di codice, 

@@ -149,7 +149,7 @@ char	*extract_content(char *str)
 				return (perror("Error: malloc"), NULL);
 			my_strncpy(content, start_quote + 1, end_quote - start_quote - 1);
 			content[end_quote - start_quote - 1] = '\0';
-			return (content);
+			return (free(str), content);
 		}
 	}
 	return (str);
@@ -175,7 +175,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->file_name = NULL;
 	new_node->in_file = STDIN_FILENO;
 	new_node->out_file = STDOUT_FILENO;
-	return ((free(spitted_cmd), new_node));
+	return ((new_node));
 }
 
 /*1) Function to create a list of tokens */
@@ -187,7 +187,7 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 
 	(void)flag;
 	(void)env;
-	new_cmd = extract_content(cmd);
+	new_cmd = extract_content(cmd);//check free something
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
