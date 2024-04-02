@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parethesis.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/24 17:17:23 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/02 21:06:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	priority_level(t_list_of_tok **head)
 	return ;
 }
 
+/* the function LEAKS HERE so badly */
 char	*add_spaces_around_symbols(char *cmd)
 {
 	int		length;
@@ -89,5 +90,5 @@ char	*add_spaces_around_symbols(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
-	return (new_cmd);
+	return ((free(cmd), new_cmd));
 }

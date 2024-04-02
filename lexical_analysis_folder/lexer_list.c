@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:27:19 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/02 21:10:21 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	if (new_node == NULL)
 	{
 		printf("Error with malloc");
-		exit(1);
+		exit(1); //TODO: exit is forbidden 
 	}
 	new_node->token = spitted_cmd;
 	new_node->type = type_of_token(spitted_cmd);
@@ -175,7 +175,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->file_name = NULL;
 	new_node->in_file = STDIN_FILENO;
 	new_node->out_file = STDOUT_FILENO;
-	return (new_node);
+	return ((free(spitted_cmd), new_node));
 }
 
 /*1) Function to create a list of tokens */

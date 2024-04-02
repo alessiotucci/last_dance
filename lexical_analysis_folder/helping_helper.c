@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helping_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:14:14 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/02 21:07:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ char	*replace_chars(char *string)
 	char	*new_string;
 
 	new_string = add_spaces_around_symbols(string);
-	return (new_string);
+	return ((free(string), new_string));
 }

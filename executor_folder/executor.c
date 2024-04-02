@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:42:27 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/02 21:16:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,10 +202,8 @@ char	**executor(t_list_of_tok **head, char **envp)
 	char			*command;
 	char			**argoums;
 	t_list_of_tok	*cmd_node;
-	int				flag;
 	char			**updated;
 
-	flag = 0;
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
@@ -216,20 +214,16 @@ char	**executor(t_list_of_tok **head, char **envp)
 		command = cmd_node->token;
 		if (cmd_node->type != T_BUILTIN)
 		{
-			flag = 1;
 			command = find_path_command(cmd_node->token, envp);
 			if (command == NULL)
 				command = ft_strdup(cmd_node->token);
 		}
 		argoums = array_from_list(&cmd_node);
 		updated = execute_command(command, argoums, envp, cmd_node);
+		free_string_array(argoums);
+		free(command);
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
 	wait_exit_status();
-	if (flag)
-	{
-		free(command);
-		free_string_array(argoums);
-	}
 	return (updated);
 }
