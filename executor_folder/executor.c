@@ -224,8 +224,6 @@ char	**executor(t_list_of_tok **head, char **envp)
 		free(command);
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
-	if (updated == NULL)
-		return(NULL);
 	wait_exit_status();
 	free_list(head);
 	free_string_array(envp);
