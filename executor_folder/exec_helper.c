@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:44:19 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:54:39 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*find_path_command(char *token, char **envp)
 	char	**directs;
 
 	directs = find_path_env(envp);
+	if (directs == NULL)
+		return (NULL);
 	i = 0;
 	while (directs[i] != NULL)
 	{
@@ -68,7 +70,9 @@ char	**find_path_env(char **env)
 		}
 		i++;
 	}
-	return (ft_split(nully, ':'));
+	if (nully != NULL)
+		return (ft_split(nully, ':'));
+	return (NULL);
 }
 
 int	valid_for_list(t_list_of_tok *node)
