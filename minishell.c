@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 21:40:42 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/03 01:31:30 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ char	**copy_array(char **env, int extra_space)
 
 int	main(int ac, char *av[], char *envp[])
 {
-	char	*input;
-	char	**env_copy;
-	int		g_exit_status;
-	t_list_of_tok *head;
-	g_exit_status = 0;
+	char			*input;
+	char			**env_copy;
+	int				g_exit_status;
+	t_list_of_tok	*head;
+	g_exit_status;
+
 	(void)ac;
 	(void)av;
 	(void)g_exit_status;
