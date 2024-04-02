@@ -98,12 +98,10 @@ t_list_of_tok	*lexer(char *string, char **env)
 	new_string = replace_me(new_string, '"', '\t', ' ');
 	new_string = replace_me(new_string, 39, '\t', ' ');
 	line_of_commands = ft_split(new_string, ' ');
+	free(new_string);
 	create_tokens(line_of_commands, &token_head, env);
 	update_token_types(&token_head);
-	//executor(&token_head, env);
-	//free_list(&token_head);
-	//free_string_array(line_of_commands);
-	return (token_head);
+	return (free_string_array(line_of_commands), token_head);
 }
 
 //lexer = una sorta di main di questa patte di codice, 

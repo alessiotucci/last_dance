@@ -67,10 +67,12 @@ int	main(int ac, char *av[], char *envp[])
 		if (input && input[0])
 			add_history(input);
 		if (input == NULL)
-			return (0 * write(1, "\n", 1));
+			return (free(env_copy), 0 * write(1, "\n", 1));
 		head = lexer(input, env_copy);
 		if (head != NULL)
 			env_copy = executor(&head, env_copy); // executor(&token_head, env);
+		//if (env_copy == NULL)??
+				
 	}
 	free_string_array(env_copy);
 }

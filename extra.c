@@ -59,7 +59,16 @@ char	*my_strndup(const char *src_str, size_t max_len)
 	dup_str[str_len] = 0;
 	return (dup_str);
 }
+/*
+int	my_strcmp(const char *s1, const char *s2)
+{
+	int	i;
 
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}*/
 int	my_strcmp(const char *str1, const char *str2)
 {
 	size_t	count;

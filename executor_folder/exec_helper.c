@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 /* 4) */
-char	*find_path_command(char *token, char **envp)
+char	*find_path_command(char *token, char **envp)//
 {
 	int		i;
 	int		y;
