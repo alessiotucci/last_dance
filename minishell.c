@@ -41,7 +41,7 @@ char	**copy_array(char **env, int extra_space)
 	}
 	while (i < env_count + extra_space)
 	{
-		env_copy[i] = NULL;
+		env_copy[i] = ""; // empty strings 
 		i++;
 	}
 	env_copy[env_count + extra_space] = NULL;
