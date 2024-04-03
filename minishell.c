@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/03 01:31:30 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/03 04:35:25 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	main(int ac, char *av[], char *envp[])
 	char			**env_copy;
 	int				g_exit_status;
 	t_list_of_tok	*head;
-	g_exit_status;
-
 	(void)ac;
 	(void)av;
 	(void)g_exit_status;
