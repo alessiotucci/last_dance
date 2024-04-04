@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 19:40:08 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 21:56:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,10 @@ char	**executor(t_list_of_tok **head, char **envp)
 	char			**argoums;
 	t_list_of_tok	*cmd_node;
 	char			**updated;
+	t_list_of_tok	**truth;
 
-	print_list_tokens(head); // here there is garbage value
+	truth = head;
+	//print_list_tokens(head); // here there is garbage value
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
@@ -229,9 +231,10 @@ char	**executor(t_list_of_tok **head, char **envp)
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
 	wait_exit_status();
-	printf("%s*\t*\t*\t%s\n", BG_YELLOW, BG_RESET);
-	print_list_tokeny(head); // here there is garbage value
-	free_list(head);
-	free_string_array(envp);
+	//printf("%s*\t*\t*\t%s\nPrinting the list:", BG_YELLOW, BG_RESET);
+	//print_list_tokeny(head); // here there is garbage value
+	free_list(truth);
+	/*if (updated != envp)
+		free_string_array(envp);*/
 	return (updated);
 }

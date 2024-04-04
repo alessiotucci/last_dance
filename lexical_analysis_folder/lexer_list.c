@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 19:11:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:31:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*expansion_dollar(char *dollar, char **env)
 	int		i;
 	int		key_len;
 
-	printf("%s EXPANSION FOR DOLLAR %s\n", GREEN, RESET);
+	//printf("%s EXPANSION FOR DOLLAR %s\n", GREEN, RESET);
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
@@ -52,9 +52,9 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 	char	*new_str;
 	char	*before_dollar;
 
-	printf("spitted: %s\n", spitted);
+	//printf("spitted: %s\n", spitted);
 	dollar_pos = ft_strchr(spitted, '$');
-	printf("$ strchr: %s\n", dollar_pos);
+	//printf("$ strchr: %s\n", dollar_pos);
 	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
 		before_dollar = my_strndup(spitted, dollar_pos - spitted);
@@ -70,7 +70,7 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 			strcpy(new_str, before_dollar);
 			strcat(new_str, expanded);
 		}
-		free(before_dollar);
+		my_free(before_dollar, "before dollar");
 	}
 	else
 	{
@@ -84,7 +84,7 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 			new_str = ft_strdup(expanded);
 	}
 	if (expanded != NULL)
-		free(expanded);
+		my_free(expanded, "expanded");
 	return (create_node(lvl, new_str));
 }
 
@@ -179,12 +179,13 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 }
 /* there is still something still reachable */
 
-/*1) Function to create a list of tokens */
+/*1) Function to create a list of tokens, char cmd is a part of split! */
 t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, int flag)
 {
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
 	char			*new_cmd;
+	char			*dollar_cmd;
 
 	(void)flag;
 	(void)env;
@@ -194,9 +195,9 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
 		//printf("string for node_for_dollar: (%s)\n", new_cmd);
-		new_cmd = find_and_expand_vars(new_cmd, env);
+		dollar_cmd = find_and_expand_vars2(new_cmd, env); //VARS2 PERCHE@
 		//printf("string after the work: (%s)\n", new_cmd);
-		new_node = create_node(0, new_cmd);
+		new_node = create_node(0, dollar_cmd);
 	}
 	else
 		new_node = create_node(0, new_cmd);

@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 18:06:11 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:18:33 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,4 +244,6 @@ void			export_format(char *var, char *value);
 int				is_valid_identifier(char *str);
 void			without_arguments(char *env[]);
 void			my_free(void *ptr, char *log);
+int				get_size(t_list_of_tok *head);
+char			*find_and_expand_vars2(char *str, char **env);
 #endif

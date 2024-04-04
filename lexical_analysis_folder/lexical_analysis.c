@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 19:11:07 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:32:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ void	create_tokens(char **commands, t_list_of_tok **head, char **env)
 		commands[i] = replace_me(commands[i], '"', ' ', '\t');
 		commands[i] = replace_me(commands[i], 39, ' ', '\t');
 		flag = handling_quotes(commands[i]);
+		//printf(RED"%s[%d]\n"RESET, commands[i], i);
 		create_list_of_tok(head, commands[i], env, flag);
 		i++;
 	}
+	free_string_array(commands);
 }
 /* there is something still reachable */
 
@@ -102,7 +104,7 @@ t_list_of_tok	*lexer(char *string, char **env)
 	my_free(new_string, "LEXER");
 	create_tokens(line_of_commands, &token_head, env);
 	update_token_types(&token_head);
-	return (free_string_array(line_of_commands), token_head);
+	return (/*free_string_array(line_of_commands),*/ token_head); // $ is freed
 }
 
 //lexer = una sorta di main di questa patte di codice, 

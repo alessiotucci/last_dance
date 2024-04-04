@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:01:42 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 19:17:38 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 22:30:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	my_free(void *ptr, char *log)
 {
 
 	if (ptr == NULL)
-		printf("%s: The pointer is already NULL.\n", log);
+		printf(PURPLE"%s: The pointer is already NULL.\n"RESET, log);
 	else
 	{
-	//	printf("%s: address_pointer: %p, %s[%s]%s\n", log, ptr, YELLOW, (char *)ptr, RESET);
+		//printf("%s: address_pointer: %p, %s[%s]%s\n", log, ptr, YELLOW, (char *)ptr, RESET);
 		free(ptr);
 	}
 }
