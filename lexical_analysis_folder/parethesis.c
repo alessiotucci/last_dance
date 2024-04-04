@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/02 21:06:06 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 18:13:57 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ char	*add_spaces_around_symbols(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
-	return ((free(cmd), new_cmd));
+	return ((my_free(cmd, "ADD SPACE ARD SYMBOLS"), new_cmd));
 }

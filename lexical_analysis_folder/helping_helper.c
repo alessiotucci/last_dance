@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/02 21:07:07 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 18:33:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_list(t_list_of_tok **head)
 	while (current != NULL)
 	{
 		next_node = current->next;
+		my_free(current->token, "FREE LIST");
 		free(current);
 		current = next_node;
 	}

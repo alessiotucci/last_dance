@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/02 20:54:39 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:15:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*find_path_command(char *token, char **envp)//
 		ft_strlcat(possible_command, token, y);
 		if (access(possible_command, X_OK) == 0)
 			return (free_string_array(directs), possible_command);
-		free(possible_command);
+		my_free(possible_command, "FIND_PATH_COMMAND");
 		i++;
 	}
 	return (free_string_array(directs), NULL);

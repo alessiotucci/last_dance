@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2024/03/29 22:08:16 by atucci           ###   ########.fr        #
+#    Updated: 2024/04/04 18:08:20 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = ./minishell.c \
 	./signals.c \
 	./extra.c \
 	./array_utils.c \
+	./my_free_utils.c \
 	./setenv.c \
 	./error_handling.c \
 	./builtin_folder/builtin_helper.c \

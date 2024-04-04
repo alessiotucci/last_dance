@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/02 21:16:59 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:40:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	**execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd
 		if (fix_pid == 0)
 		{
 			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL
-				&& cmd_nod->next->type != T_HERE_DOC)
+				&& cmd_nod->next->type != T_HERE_DOC && cmd_nod->next->type != T_REDIR_IN)
 				close(cmd_nod->next->next->in_file);
 			execve(cmd, args_a, envp);
 			printf_fd(cmd, stdout_copy);
@@ -174,6 +174,8 @@ char	**execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
 	restore_original_stdin(stdin_copy, cmd_nod);
+	if (cmd_nod->type != T_BUILTIN)
+		my_free(cmd, "execute_command"); // this seems to work
 	return (updated);
 }
 
@@ -204,6 +206,7 @@ char	**executor(t_list_of_tok **head, char **envp)
 	t_list_of_tok	*cmd_node;
 	char			**updated;
 
+	print_list_tokens(head); // here there is garbage value
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
@@ -216,15 +219,18 @@ char	**executor(t_list_of_tok **head, char **envp)
 		{
 			command = find_path_command(cmd_node->token, envp);
 			if (command == NULL)
-				command = ft_strdup(cmd_node->token);
+				//command = ft_strdup(cmd_node->token);
+				command = cmd_node->token;
 		}
 		argoums = array_from_list(&cmd_node);
 		updated = execute_command(command, argoums, envp, cmd_node);
 		free_string_array(argoums);
-		free(command);
+		//my_free(command, "EXECUTOR");
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
 	wait_exit_status();
+	printf("%s*\t*\t*\t%s\n", BG_YELLOW, BG_RESET);
+	print_list_tokeny(head); // here there is garbage value
 	free_list(head);
 	free_string_array(envp);
 	return (updated);

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 15:08:41 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 21:49:28 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 18:50:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	free_string_array(char **array)
 		return (1);
 	while (array[count])
 	{
+		//my_free(array[count], "free string array");
 		free(array[count]);
 		count++;
 	}

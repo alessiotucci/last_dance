@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:17:10 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:11:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	create_tokens(char **commands, t_list_of_tok **head, char **env)
 		i++;
 	}
 }
+/* there is something still reachable */
 
 /*1 The main function of the lexer, we use split and get the command line*/
 //int	lexer(char *string, char **env)
@@ -98,7 +99,7 @@ t_list_of_tok	*lexer(char *string, char **env)
 	new_string = replace_me(new_string, '"', '\t', ' ');
 	new_string = replace_me(new_string, 39, '\t', ' ');
 	line_of_commands = ft_split(new_string, ' ');
-	free(new_string);
+	my_free(new_string, "LEXER");
 	create_tokens(line_of_commands, &token_head, env);
 	update_token_types(&token_head);
 	return (free_string_array(line_of_commands), token_head);

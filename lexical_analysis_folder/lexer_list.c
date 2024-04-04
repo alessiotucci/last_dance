@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/02 21:10:21 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:11:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 		expanded = expansion_dollar(dollar_pos, env);
 		if (expanded == NULL)
 		{
-			printf("I need to handle better these cases\n");
+			//printf("I need to handle better these cases\n");
 			new_str = ft_strdup(before_dollar);
 		}
 		else
@@ -77,7 +77,7 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 		expanded = expansion_dollar(spitted, env);
 		if (expanded == NULL)
 		{
-			printf("I need to handle better these cases\n");
+			//printf("I need to handle better these cases\n");
 			new_str = ft_strdup("");
 		}
 		else
@@ -149,7 +149,7 @@ char	*extract_content(char *str)
 				return (perror("Error: malloc"), NULL);
 			my_strncpy(content, start_quote + 1, end_quote - start_quote - 1);
 			content[end_quote - start_quote - 1] = '\0';
-			return (free(str), content);
+			return (my_free(str, "extract_content"), content);
 		}
 	}
 	return (str);
@@ -166,7 +166,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 		printf("Error with malloc");
 		exit(1); //TODO: exit is forbidden 
 	}
-	new_node->token = spitted_cmd;
+	new_node->token = ft_strdup(spitted_cmd); //TODO: THIS WAS A QUICK FIX
 	new_node->type = type_of_token(spitted_cmd);
 	new_node->priority_lev = level;
 	new_node->next = NULL;
@@ -177,6 +177,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->out_file = STDOUT_FILENO;
 	return ((new_node));
 }
+/* there is still something still reachable */
 
 /*1) Function to create a list of tokens */
 t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, int flag)
@@ -192,9 +193,9 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
-		printf("string for node_for_dollar: (%s)\n", new_cmd);
+		//printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_cmd = find_and_expand_vars(new_cmd, env);
-		printf("string after the work: (%s)\n", new_cmd);
+		//printf("string after the work: (%s)\n", new_cmd);
 		new_node = create_node(0, new_cmd);
 	}
 	else

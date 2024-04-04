@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 22:07:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/04 18:06:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,4 +243,5 @@ void			printf_fd(char *str, int fd);
 void			export_format(char *var, char *value);
 int				is_valid_identifier(char *str);
 void			without_arguments(char *env[]);
+void			my_free(void *ptr, char *log);
 #endif
