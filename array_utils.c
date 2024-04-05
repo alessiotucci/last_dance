@@ -37,6 +37,8 @@ void	print_string_array(char **array)
 	}
 }
 
+/*TODO; This is a debugging feature */
+/*my_free(array[count], "free string array");*/
 int	free_string_array(char **array)
 {
 	int	count;
@@ -46,7 +48,6 @@ int	free_string_array(char **array)
 		return (1);
 	while (array[count])
 	{
-		//my_free(array[count], "free string array");
 		free(array[count]);
 		count++;
 	}

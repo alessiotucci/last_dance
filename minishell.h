@@ -71,7 +71,7 @@
 # define COMMAND_NOT_EXECUTABLE 126
 # define COMMAND_NOT_FOUND 127
 # define INVALID_EXIT_ARG 128
-# define FATAL_ERROR_SIGNAL(n) (128 + n)
+//TODO: FIX THIS# define FATAL_ERROR_SIGNAL(n) (128 + n)
 # define SCRIPT_TERMINATED 130
 # define EXIT_STATUS_OUT_OF_RANGE 255
 // minishell.h
@@ -145,7 +145,7 @@ int				is_flag(char *str);
 int				is_builtin(char *str);
 int				is_parent(char *str);
 /*Starting working on the parsing*/
-t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env, int flag);
+t_list_of_tok	*create_list(t_list_of_tok **h, char *cmd, char **env, int f);
 void			print_list_tokens(t_list_of_tok **head);
 void			print_list_tokeny(t_list_of_tok **head);
 /* this is the last print function */
@@ -179,12 +179,15 @@ void			try_builtin(void);
 t_list_of_tok	**update_list_order(t_list_of_tok **head);
 void			find_empty_redirection(t_list_of_tok **head);
 t_list_of_tok	*create_empty_node(void);
-t_list_of_tok	*find_first_occurrence(t_list_of_tok *head, t_type_of_tok enum_value);
+t_list_of_tok	*find_first_occurrence(t_list_of_tok *h, t_type_of_tok enumv);
 int				is_a_redirection(t_list_of_tok *node);
-void			insert_after_node(t_list_of_tok *node_to_insert_after, t_list_of_tok *new_node);
-void			remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove);
-void			move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
-void			move_node_fix(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
+void			insert_after_node(t_list_of_tok *insert_after,
+					t_list_of_tok *new_node);
+void			remove_node(t_list_of_tok **h, t_list_of_tok *node_to_remove);
+void			move_node(t_list_of_tok **h, t_list_of_tok *tar,
+					t_list_of_tok *mov);
+void			move_node_fix(t_list_of_tok **h, t_list_of_tok *tar,
+					t_list_of_tok *mov);
 /* moving around functino */
 int				is_a_redirection(t_list_of_tok *token);
 int				is_valid_prev(t_list_of_tok *node);
@@ -195,7 +198,7 @@ void			free_list(t_list_of_tok **head);
 /* build in functions */
 void			minishell_pwd(void);
 //void			minishell_cd(char *directory);
-char			**my_setenv(char **old_copy, char *key, char *new_value, int append_flag);
+char			**my_setenv(char **old_copy, char *key, char *new_val, int a);
 void			minishell_cd(char *directory, char **env);
 void			minishell_echo(char *args[]);
 void			minishell_export(char *args[]);
@@ -215,7 +218,7 @@ char			**executor(t_list_of_tok **head, char **envp);
 char			**find_path_env(char **env);
 char			**array_from_list(t_list_of_tok **head);
 char			*find_path_command(char *token, char **envp);
-char			**execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
+char			**exec_cmd(char *cmd, char **t, char **e, t_list_of_tok *c);
 int				redirection_process(char *file_name, t_type_of_tok type);
 t_list_of_tok	*find_command_in_list(t_list_of_tok **head);
 /* fucking redirection are here*/

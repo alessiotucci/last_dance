@@ -138,9 +138,11 @@ void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
  * first handle the redirection
  * then check for builtins, after perform built in, restore fd (?)
  * otherwise fork and go on with execve, after that restore fd (?)
+ * // this seems to work at line 178
+	//TODO: need to fix the case with the cat to close the stdin etc
 */
 //void	*execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd_nod)
-char	**execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd_nod)
+char	**exec_cmd(char *cmd, char **args, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
 	int		stdout_copy;
@@ -154,7 +156,7 @@ char	**execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
 			return (NULL);
 	if (cmd_nod->type == T_BUILTIN)
-		updated = which_built_in(cmd_nod, args_a, envp);
+		updated = which_built_in(cmd_nod, args, envp);
 	else
 	{
 		updated = envp;
@@ -164,18 +166,17 @@ char	**execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd
 			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL
 				&& cmd_nod->next->type != T_HERE_DOC && cmd_nod->next->type != T_REDIR_IN)
 				close(cmd_nod->next->next->in_file);
-			execve(cmd, args_a, envp);
+			execve(cmd, args, envp);
 			printf_fd(cmd, stdout_copy);
 			print_and_update(": command not found\n", COMMAND_NOT_FOUND,
 				stdout_copy);
-			//exit(COMMAND_NOT_FOUND);
 			return (NULL);
 		}
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
 	restore_original_stdin(stdin_copy, cmd_nod);
 	if (cmd_nod->type != T_BUILTIN)
-		my_free(cmd, "execute_command"); // this seems to work
+		my_free(cmd, "execute_command");
 	return (updated);
 }
 
@@ -225,7 +226,7 @@ char	**executor(t_list_of_tok **head, char **envp)
 				command = cmd_node->token;
 		}
 		argoums = array_from_list(&cmd_node);
-		updated = execute_command(command, argoums, envp, cmd_node);
+		updated = exec_cmd(command, argoums, envp, cmd_node);
 		free_string_array(argoums);
 		//my_free(command, "EXECUTOR");
 		cmd_node = find_command_in_list(&cmd_node->next);

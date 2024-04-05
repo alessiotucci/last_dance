@@ -79,7 +79,7 @@ void	create_tokens(char **commands, t_list_of_tok **head, char **env)
 		commands[i] = replace_me(commands[i], 39, ' ', '\t');
 		flag = handling_quotes(commands[i]);
 		//printf(RED"%s[%d]\n"RESET, commands[i], i);
-		create_list_of_tok(head, commands[i], env, flag);
+		create_list(head, commands[i], env, flag);
 		i++;
 	}
 	free_string_array(commands);

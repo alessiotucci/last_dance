@@ -44,6 +44,11 @@ static char	*expansion_dollar(char *dollar, char **env)
  * This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation
+ *
+	//printf("spitted: %s\n", spitted);
+	//printf("$ strchr: %s\n", dollar_pos);
+	//printf("I need to handle better these cases\n");
+	//printf("I need to handle better these cases\n");
 */
 t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 {
@@ -52,18 +57,13 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 	char	*new_str;
 	char	*before_dollar;
 
-	//printf("spitted: %s\n", spitted);
 	dollar_pos = ft_strchr(spitted, '$');
-	//printf("$ strchr: %s\n", dollar_pos);
 	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
 		before_dollar = my_strndup(spitted, dollar_pos - spitted);
 		expanded = expansion_dollar(dollar_pos, env);
 		if (expanded == NULL)
-		{
-			//printf("I need to handle better these cases\n");
 			new_str = ft_strdup(before_dollar);
-		}
 		else
 		{
 			new_str = malloc(strlen(before_dollar) + ft_strlen(expanded) + 1);
@@ -76,10 +76,7 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 	{
 		expanded = expansion_dollar(spitted, env);
 		if (expanded == NULL)
-		{
-			//printf("I need to handle better these cases\n");
 			new_str = ft_strdup("");
-		}
 		else
 			new_str = ft_strdup(expanded);
 	}
@@ -154,7 +151,8 @@ char	*extract_content(char *str)
 	}
 	return (str);
 }
-
+/*TODO: exit is forbidden */
+/*TODO: THIS WAS A QUICK FIX (using the ft_strdup) */
 /*2)  Helper function to create a new node */
 t_list_of_tok	*create_node(int level, char *spitted_cmd)
 {
@@ -164,9 +162,9 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	if (new_node == NULL)
 	{
 		printf("Error with malloc");
-		exit(1); //TODO: exit is forbidden 
+		exit(1);
 	}
-	new_node->token = ft_strdup(spitted_cmd); //TODO: THIS WAS A QUICK FIX
+	new_node->token = ft_strdup(spitted_cmd);
 	new_node->type = type_of_token(spitted_cmd);
 	new_node->priority_lev = level;
 	new_node->next = NULL;
@@ -178,25 +176,27 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	return ((new_node));
 }
 /* there is still something still reachable */
-
-/*1) Function to create a list of tokens, char cmd is a part of split! */
-t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, int flag)
+/*TODO: finish up the debugging
+ *check free something
+ //VARS2 PERCHE@ line 201 there is a issue
+//printf("string for node_for_dollar: (%s)\n", new_cmd);
+//printf("string after the work: (%s)\n", new_cmd);
+*1) Function to create a list of tokens, char cmd is a part of split! */
+t_list_of_tok	*create_list(t_list_of_tok **head, char *cmd, char **en, int f)
 {
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
 	char			*new_cmd;
 	char			*dollar_cmd;
 
-	(void)flag;
-	(void)env;
-	new_cmd = extract_content(cmd);//check free something
+	(void)f;
+	(void)en;
+	new_cmd = extract_content(cmd);
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
-	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
+	else if ((ft_strchr(new_cmd, '$') != NULL) && (f != SINGLE_QUOTE))
 	{
-		//printf("string for node_for_dollar: (%s)\n", new_cmd);
-		dollar_cmd = find_and_expand_vars2(new_cmd, env); //VARS2 PERCHE@
-		//printf("string after the work: (%s)\n", new_cmd);
+		dollar_cmd = find_and_expand_vars2(new_cmd, en);
 		new_node = create_node(0, dollar_cmd);
 	}
 	else

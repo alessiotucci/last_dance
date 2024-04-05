@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*TODO: this is a debug feature to print the pointer if needed */
 /*printf("%s: address_pointer: %p, %s[%s]%s\n",
  * log, ptr, YELLOW, (char *)ptr, RESET); */
 void	my_free(void *ptr, char *log)
