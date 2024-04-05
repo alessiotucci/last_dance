@@ -51,6 +51,7 @@ SRC = ./minishell.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \
 	./recursive_parsing_tree/tree_helper.c \
 	./wildcard_bonus/wildcard.c \
+	./wildcard_bonus/wildcard_support.c \
 	./printf_for_debug/debug.c # this is just for debugging
 
 #------------------------------------------------------------------------------

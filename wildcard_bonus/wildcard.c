@@ -52,7 +52,7 @@ static char	*get_suffix(char *copy)
 	return (suffix);
 }
 
-static int	find_matches(char *wildcard, char *nam)
+int	find_matches(char *wildcard, char *nam)
 {
 	char	*prefix;
 	char	*suffix;
@@ -129,7 +129,7 @@ static int	count_matches(char *wildcard)
 	return (count);
 }
 
-/* Helper function to expland wildcard and create a node for each
+/*/Helper function to expland wildcard and create a node for each
 char	**expansion_wildcard(char *wildcard)
 {
 	DIR				*directory;
@@ -160,7 +160,7 @@ char	**expansion_wildcard(char *wildcard)
 	if (closedir(directory) == -1)
 		return (perror("Error closing directory"), NULL);
 	return (sort_string_array(matrix));
-}*/
+}
 static char	**allocate_matrix(int max_matrix)
 {
 	char	**matrix;
@@ -173,6 +173,7 @@ static char	**allocate_matrix(int max_matrix)
 	}
 	return (matrix);
 }
+//----------------------------------------------------- fill matrix la divido in 2
 
 static char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 {
@@ -203,6 +204,51 @@ static char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 	return (matrix);
 }
 
+//preticamente qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
+static char **allocate_and_check_wildcards(DIR *directory, char *wildcard, int max_matrix)
+{
+	char	**matrix = allocate_matrix(max_matrix);
+	if (matrix == NULL)
+		return NULL;
+	struct dirent	*entry = readdir(directory);
+	while (entry != NULL) {
+		if (find_matches(wildcard, entry->d_name) == 0)
+		{
+			break;
+		}
+	entry = readdir(directory);
+	}
+	return matrix;
+}
+
+static char **fill_matrix(DIR *directory, char *wildcard, int max_matrix)
+{
+	char	**matrix = allocate_and_check_wildcards(directory, wildcard, max_matrix);
+	if (matrix == NULL)
+		return NULL;
+	struct	dirent *entry;
+	int	i;
+
+	i = 0;
+	
+	while ((entry = readdir (directory)) != NULL)
+	{
+		if (find_matches (wildcard, entry->d_name) == 0)
+		{
+			matrix[count++] = ft_strdup (entry->d_name);
+			if (matrix[] == NULL)
+			{
+				perror("Memory allocation failed");
+				free_string_array(matrix);
+				return NULL;
+			}
+		}
+	}
+
+    matrix[count] = NULL;
+    return matrix;
+}*/
+//--------------------------------------------------------------------------------------
 char	**expansion_wildcard(char *wildcard)
 {
 	DIR		*directory;

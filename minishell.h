@@ -238,6 +238,8 @@ void			handle_ctrl_backlash(int sig);
 /*function to handle the * wildcards */
 int				valid_wildcard(const char *str);
 char			**expansion_wildcard(char *wildcard);
+int			find_matches(char *wildcard, char *nam);
+char			**fill_matrix(DIR *directory, char *wildcard, int max_matrix);
 /* handling errors */
 void			set_g_exit(int status);
 void			print_and_update(char *str, int status, int fd);
