@@ -13,7 +13,6 @@
 #include "minishell.h"
 #include <string.h>
 
-
 void	my_sprintf(char *buffer, char *key, char *old_value, char *new_value)
 {
 	int	bufflen;
@@ -26,20 +25,28 @@ void	my_sprintf(char *buffer, char *key, char *old_value, char *new_value)
 	ft_strlcat(buffer, new_value, ft_strlen(new_value) + bufflen + 1);
 }
 
-char **my_setenv(char **old_env, char *key, char *new_value, int append_flag)
+/* segfault at line 43, and fix the free at line 66 */
+/*
+ *
+ *
+//free(old_env[i]);
+//TODO: fix the segfault
+//printf("key:[%s]\tnew_value:[%s]\n\n", key, new_value);
+//printf("check this:  ");
+//TODO; this is the DEAL!!
+ */
+char	**my_setenv(char **old_env, char *key, char *new_value, int append_flag)
 {
 	int		i;
 	char	*new_entry;
 	int		key_len;
 	char	*old_value;
 
-	//printf("check this:  ");
-	//printf("key:[%s]\tnew_value:[%s]\n\n", key, new_value);
 	key_len = ft_strlen(key);
 	i = 0;
 	while (old_env[i] != NULL)
 	{
-		if (new_value == NULL) //TODO: fix the segfault
+		if (new_value == NULL)
 			break ;
 		if (ft_strncmp(old_env[i], key, key_len) == 0
 			&& old_env[i][key_len] == '=')
@@ -47,7 +54,8 @@ char **my_setenv(char **old_env, char *key, char *new_value, int append_flag)
 			if (append_flag)
 			{
 				old_value = old_env[i] + key_len + 1;
-				new_entry = malloc(ft_strlen(old_value) + ft_strlen(new_value) + key_len + 3);
+				new_entry = malloc(ft_strlen(old_value)
+						+ ft_strlen(new_value) + key_len + 3);
 				my_sprintf(new_entry, key, old_value, new_value);
 			}
 			else
@@ -55,28 +63,21 @@ char **my_setenv(char **old_env, char *key, char *new_value, int append_flag)
 				new_entry = malloc(ft_strlen(new_value) + key_len + 2);
 				my_sprintf(new_entry, key, NULL, new_value);
 			}
-			//free(old_env[i]);
 			old_env[i] = new_entry;
 			return (old_env);
 		}
 		i++;
 	}
-	old_env = copy_array(old_env, 1); //TODO; this is the DEAL!!
+	old_env = copy_array(old_env, 1);
 	if (new_value != NULL)
 		new_entry = malloc(ft_strlen(new_value) + key_len + 2);
 	else
 	{
 		new_entry = malloc(key_len);
-		//printf("new_value is null, ELSE\n");
 		new_value = "";
 	}
-	//printf("new_entry: [%s] key:[%s] new_value:[%s]\n", new_entry, key, new_value);
 	my_sprintf(new_entry, key, NULL, new_value);
 	old_env[i] = new_entry;
-	//printf("'%s', old_env[%d]\n", old_env[i], i);
-	//print_string_array(sort_string_array(old_env));
-	//printf("the lenght: [%s%d%s]\n", RED, lenght_string_array(old_env), RESET);
-	//printf("%sold_env  is\n%p%s\n", RED, old_env, RESET);
 	free(new_entry);
 	return (old_env);
 }
