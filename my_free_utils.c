@@ -14,16 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/*printf("%s: address_pointer: %p, %s[%s]%s\n",
+ * log, ptr, YELLOW, (char *)ptr, RESET); */
 void	my_free(void *ptr, char *log)
 {
-
 	if (ptr == NULL)
 		printf(PURPLE"%s: The pointer is already NULL.\n"RESET, log);
 	else
 	{
-		//printf("%s: address_pointer: %p, %s[%s]%s\n", log, ptr, YELLOW, (char *)ptr, RESET);
 		free(ptr);
 	}
 }
-
