@@ -41,19 +41,21 @@ char	**copy_array(char **env, int extra_space)
 	}
 	while (i < env_count + extra_space)
 	{
-		env_copy[i] = ""; // empty strings 
+		env_copy[i] = "";
 		i++;
 	}
 	env_copy[env_count + extra_space] = NULL;
 	return (env_copy);
 }
 
+/*TODO: check if the return of the executor is null*/
 int	main(int ac, char *av[], char *envp[])
 {
 	char			*input;
 	char			**env_copy;
 	int				g_exit_status;
 	t_list_of_tok	*head;
+
 	(void)ac;
 	(void)av;
 	(void)g_exit_status;
@@ -69,9 +71,7 @@ int	main(int ac, char *av[], char *envp[])
 			return (0 * write(1, "\n", 1));
 		head = lexer(input, env_copy);
 		if (head != NULL)
-			env_copy = executor(&head, env_copy); // executor(&token_head, env);
-		//if (env_copy == NULL)??
-				
+			env_copy = executor(&head, env_copy);
 	}
 	free_string_array(env_copy);
 }
