@@ -33,6 +33,7 @@ SRC = ./minishell.c \
 	./builtin_folder/export.c \
 	./builtin_folder/export_helper.c \
 	./dollar_work/dollars.c \
+	./dollar_work/dollars_support.c \
 	./lexical_analysis_folder/lexical_analysis.c \
 	./lexical_analysis_folder/lexer_regex.c \
 	./lexical_analysis_folder/lexer_regex2.c \

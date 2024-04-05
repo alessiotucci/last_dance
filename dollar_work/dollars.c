@@ -37,7 +37,7 @@ char	*extract_content_parenthes(char *str)
 	}
 	return (str);
 }
-
+/*
 char	*expansion_dollary(char *dollar, char **env)
 {
 	char	*key;
@@ -108,7 +108,7 @@ char	*replace_substr(char *str, char *substr, char *replacement)
 	}
 	strcpy(tmp, str);
 	return (result);
-}
+}*/
 /*
  *
  *                                _                      _

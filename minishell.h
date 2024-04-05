@@ -212,6 +212,7 @@ char			**which_built_in(t_list_of_tok *node, char **args, char **env);
 char			*expansion_dollary(char *dollar, char **env);
 char			*replace_substr(char *str, char *substr, char *replacement);
 char			*find_and_expand_vars(char *str, char **env);
+char			*extract_content_parenthes(char *str);
 /* DOLLAR END */
 /* function for the executor */
 char			**executor(t_list_of_tok **head, char **envp);
