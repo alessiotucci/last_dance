@@ -83,57 +83,6 @@ int	find_redirect(t_list_of_tok *cmd_node)
 	return (0);
 }
 
-/*3)
- this fuction handle the redirection process
- redirection_process(current, current->next->type);
- */
-int	redirection_process(char *file_name, t_type_of_tok type)
-{
-	if (type == T_REDIR_IN)
-		if (redirect_input(file_name))
-			return (1);
-	if (type == T_REDIR_OUT || type == T_REDIR_APP)
-		redirect_output(file_name, type);
-	if (type == T_HERE_DOC)
-	{
-		printf("here doc \n");
-		here_document(file_name);
-	}
-	return (0);
-}
-
-/* this function is suppose to handle the piping if
- * the fd are differente than the standards
-*/
-void	piping_process(t_list_of_tok *cmd_nod)
-{
-	if (cmd_nod->index != 0)
-	{
-		dup2(cmd_nod->in_file, STDIN_FILENO);
-		close(cmd_nod->in_file);
-	}
-	if (cmd_nod->out_file != 1)
-	{
-		dup2(cmd_nod->out_file, STDOUT_FILENO);
-		close(cmd_nod->out_file);
-	}
-}
-
-/* last change */
-void	restore_original_stdout(int copy, t_list_of_tok *cmd_nod)
-{
-	(void)cmd_nod;
-	dup2(copy, STDOUT_FILENO);
-	close(copy);
-}
-
-void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
-{
-	(void)cmd_nod;
-	dup2(copy, STDIN_FILENO);
-	close(copy);
-}
-
 /* 2)
  * first handle the redirection
  * then check for builtins, after perform built in, restore fd (?)
@@ -141,7 +90,6 @@ void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
  * // this seems to work at line 178
 	//TODO: need to fix the case with the cat to close the stdin etc
 */
-//void	*execute_command(char *cmd, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 char	**exec_cmd(char *cmd, char **args, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
@@ -164,7 +112,8 @@ char	**exec_cmd(char *cmd, char **args, char **envp, t_list_of_tok *cmd_nod)
 		if (fix_pid == 0)
 		{
 			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL
-				&& cmd_nod->next->type != T_HERE_DOC && cmd_nod->next->type != T_REDIR_IN)
+				&& cmd_nod->next->type != T_HERE_DOC
+				&& cmd_nod->next->type != T_REDIR_IN)
 				close(cmd_nod->next->next->in_file);
 			execve(cmd, args, envp);
 			printf_fd(cmd, stdout_copy);
@@ -199,7 +148,9 @@ void	wait_exit_status(void)
 	}
 }
 
-//int	executor(t_list_of_tok **head, char **envp)
+/*TODO: check for the strdup at line 172, it can fix some issues
+ *TODO: try to free before the cmd_node the command, it can fix leaks */
+/*TODO: we need to fix the env copy or free it if necessary at line 186*/
 char	**executor(t_list_of_tok **head, char **envp)
 {
 	char			*command;
@@ -209,7 +160,6 @@ char	**executor(t_list_of_tok **head, char **envp)
 	t_list_of_tok	**truth;
 
 	truth = head;
-	//print_list_tokens(head); // here there is garbage value
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
@@ -222,20 +172,14 @@ char	**executor(t_list_of_tok **head, char **envp)
 		{
 			command = find_path_command(cmd_node->token, envp);
 			if (command == NULL)
-				//command = ft_strdup(cmd_node->token);
 				command = cmd_node->token;
 		}
 		argoums = array_from_list(&cmd_node);
 		updated = exec_cmd(command, argoums, envp, cmd_node);
 		free_string_array(argoums);
-		//my_free(command, "EXECUTOR");
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
 	wait_exit_status();
-	//printf("%s*\t*\t*\t%s\nPrinting the list:", BG_YELLOW, BG_RESET);
-	//print_list_tokeny(head); // here there is garbage value
 	free_list(truth);
-	/*if (updated != envp)
-		free_string_array(envp);*/
 	return (updated);
 }

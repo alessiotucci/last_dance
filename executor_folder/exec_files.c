@@ -17,8 +17,8 @@ void	*here_document(char *delimiter)
 {
 	char	*line;
 	int		temp_fd;
-	(void)delimiter;
 
+	(void)delimiter;
 	temp_fd = open(".txt", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (temp_fd == -1)
 		return (perror("open"), NULL);
@@ -35,10 +35,10 @@ void	*here_document(char *delimiter)
 		free(line);
 	}
 	close(temp_fd);
-	temp_fd  = open(".txt", O_RDONLY);
+	temp_fd = open(".txt", O_RDONLY);
 	if (temp_fd == -1)
 		return (perror("open"), NULL);
-	if (dup2(temp_fd, STDIN_FILENO) == -1) // this need to be changed
+	if (dup2(temp_fd, STDIN_FILENO) == -1)
 		return (perror("dup2"), NULL);
 	close(temp_fd);
 	unlink(".txt");

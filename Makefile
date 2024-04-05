@@ -47,6 +47,7 @@ SRC = ./minishell.c \
 	./executor_folder/exec_helper.c \
 	./executor_folder/exec_files.c \
 	./executor_folder/pipex.c \
+	./executor_folder/exec_process.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \
 	./recursive_parsing_tree/tree_helper.c \
 	./wildcard_bonus/wildcard.c \

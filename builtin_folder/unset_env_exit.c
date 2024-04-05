@@ -15,7 +15,7 @@
 
 /* Function to implement the 'unset' built-in*/
 // Function to implement the 'unset' built-in
-void minishell_unset(char *var_name, char *envp[])
+void	minishell_unset(char *var_name, char *envp[])
 {
 	char	**env;
 	int		found;
@@ -27,11 +27,11 @@ void minishell_unset(char *var_name, char *envp[])
 		return ;
 	while (*env != NULL)
 	{
-		if (ft_strncmp(*env, var_name, ft_strlen(var_name)) == 0 &&
-			(*env)[ft_strlen(var_name)] == '=')
+		if (ft_strncmp(*env, var_name, ft_strlen(var_name)) == 0
+			&& (*env)[ft_strlen(var_name)] == '=')
 		{
 			found = 1;
-			break;
+			break ;
 		}
 		env++;
 	}
@@ -45,6 +45,7 @@ void minishell_unset(char *var_name, char *envp[])
 		}
 	}
 }
+
 /* If no arguments provided, print the current environment variables
  * we need to double check this case
  * THIS IS SOME KIND OF BULLSHIT!! */
@@ -67,7 +68,7 @@ void	handle_signal(int signal)
 	exit(1);
 }
 
-/* we CANT USE EXIT! */
+/*TODO: we CANT USE EXIT! */
 void	minishell_exit(char **arg)
 {
 	int		exit_code;

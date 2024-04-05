@@ -12,6 +12,22 @@
 
 #include "../minishell.h"
 
+static int	process_number(int total, int count_single, int count_double)
+{
+	if (total % 2 != 0)
+		return (ERROR_QUOTE);
+	else if (total > 2)
+		return (SEVERAL_QUOTES);
+	else if (count_single == 0 && count_double == 0)
+		return (NO_QUOTE);
+	else if (count_single != 0 && count_double == 0)
+		return (SINGLE_QUOTE);
+	else if (count_single == 0 && count_double != 0)
+		return (DOUBLE_QUOTE);
+	else
+		return (NO_QUOTE);
+}
+
 int	handling_quotes(char *input)
 {
 	int	count_single;
@@ -31,18 +47,7 @@ int	handling_quotes(char *input)
 		i++;
 	}
 	total_quotes = count_single + count_double;
-	if (total_quotes % 2 != 0)
-		return (ERROR_QUOTE);
-	else if (total_quotes > 2)
-		return (SEVERAL_QUOTES);
-	else if (count_single == 0 && count_double == 0)
-		return (NO_QUOTE);
-	else if (count_single != 0 && count_double == 0)
-		return (SINGLE_QUOTE);
-	else if (count_single == 0 && count_double != 0)
-		return (DOUBLE_QUOTE);
-	else
-		return (NO_QUOTE);
+	return (process_number(total_quotes, count_single, count_double));
 }
 
 /* Function to handle quotes 
@@ -78,7 +83,6 @@ void	create_tokens(char **commands, t_list_of_tok **head, char **env)
 		commands[i] = replace_me(commands[i], '"', ' ', '\t');
 		commands[i] = replace_me(commands[i], 39, ' ', '\t');
 		flag = handling_quotes(commands[i]);
-		//printf(RED"%s[%d]\n"RESET, commands[i], i);
 		create_list(head, commands[i], env, flag);
 		i++;
 	}
@@ -88,6 +92,7 @@ void	create_tokens(char **commands, t_list_of_tok **head, char **env)
 
 /*1 The main function of the lexer, we use split and get the command line*/
 //int	lexer(char *string, char **env)
+/*TODO: in the return statement there was a needed free. but  I changed*/
 t_list_of_tok	*lexer(char *string, char **env)
 {
 	char			**line_of_commands;
@@ -104,7 +109,7 @@ t_list_of_tok	*lexer(char *string, char **env)
 	my_free(new_string, "LEXER");
 	create_tokens(line_of_commands, &token_head, env);
 	update_token_types(&token_head);
-	return (/*free_string_array(line_of_commands),*/ token_head); // $ is freed
+	return (token_head);
 }
 
 //lexer = una sorta di main di questa patte di codice, 

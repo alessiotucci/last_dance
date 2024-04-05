@@ -39,20 +39,6 @@ char	*find_path_command(char *token, char **envp)//
 	return (free_string_array(directs), NULL);
 }
 
-/*3) Function to get the size of the list */
-int	get_size(t_list_of_tok *head)
-{
-	int	size;
-
-	size = 0;
-	while (head != NULL)
-	{
-		size++;
-		head = head->next;
-	}
-	return (size);
-}
-
 /*2) helper function to find the path in the ev */
 char	**find_path_env(char **env)
 {

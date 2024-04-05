@@ -19,7 +19,6 @@ static char	*expansion_dollar(char *dollar, char **env)
 	int		i;
 	int		key_len;
 
-	//printf("%s EXPANSION FOR DOLLAR %s\n", GREEN, RESET);
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
@@ -151,6 +150,7 @@ char	*extract_content(char *str)
 	}
 	return (str);
 }
+
 /*TODO: exit is forbidden */
 /*TODO: THIS WAS A QUICK FIX (using the ft_strdup) */
 /*2)  Helper function to create a new node */
@@ -175,6 +175,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->out_file = STDOUT_FILENO;
 	return ((new_node));
 }
+
 /* there is still something still reachable */
 /*TODO: finish up the debugging
  *check free something

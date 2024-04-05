@@ -249,4 +249,9 @@ void			without_arguments(char *env[]);
 void			my_free(void *ptr, char *log);
 int				get_size(t_list_of_tok *head);
 char			*find_and_expand_vars2(char *str, char **env);
+/* for norminette */
+int				redirection_process(char *file_name, t_type_of_tok type);
+void			piping_process(t_list_of_tok *cmd_nod);
+void			restore_original_stdout(int copy, t_list_of_tok *cmd_nod);
+void			restore_original_stdin(int copy, t_list_of_tok *cmd_nod);
 #endif
