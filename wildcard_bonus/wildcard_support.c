@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 22:55:56 by marvin            #+#    #+#             */
-/*   Updated: 2024/04/06 16:41:27 by ftroise          ###   ########.fr       */
+/*   Created: 2024/04/06 17:01:33 by ftroise           #+#    #+#             */
+/*   Updated: 2024/04/06 17:15:24 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**allocate_matrix(int max_matrix)
 	}
 	return (matrix);
 }
-//----------------------------------------------------- fill matrix la divido in 2
+//-----------------------------fill matrix la divido in 2
 /*static char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 {
 	struct dirent		*entry;
@@ -100,5 +100,22 @@ char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 	matrix[i] = NULL;
 	return (matrix);
 }
-//preticamente qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
+//qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
 
+int	find_matches(char *wildcard, char *nam)
+{
+	char	*prefix;
+	char	*suffix;
+	char	*copy;
+
+	copy = ft_strdup(wildcard);
+	prefix = get_prefix(copy);
+	suffix = get_suffix(copy);
+	if (prefix != NULL && ft_strncmp(nam, prefix, ft_strlen(prefix)) != 0)
+		return (free(copy), 1);
+	if (suffix != NULL && my_strcmp(nam + ft_strlen(nam)
+			- ft_strlen(suffix), suffix) != 0)
+		return (free(copy), 1);
+	free(copy);
+	return (0);
+}

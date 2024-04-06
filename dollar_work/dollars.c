@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:23:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/04 22:23:43 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:52:02 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ char	*replace_substr(char *str, char *substr, char *replacement)
  *
  *
  * */
+
 char	*extract_var_name(char *str, int start_index, int *end_index)
 {
 	char	*var_start;
@@ -130,7 +131,7 @@ char	*extract_var_name(char *str, int start_index, int *end_index)
 	while (*var_end != '\0' && *var_end != ' ' && *var_end != '$')
 		var_end++;
 	*end_index = var_end - str;
-	return strndup(var_start, var_end - var_start);
+	return (strndup(var_start, var_end - var_start));
 }
 
 char	*replace_substring(char *str, char *var_name, char *var_value)
@@ -177,6 +178,5 @@ char	*find_and_expand_vars2(char *str, char **env)
 		}
 		i++;
 	}
-	return str;
+	return (str);
 }
-

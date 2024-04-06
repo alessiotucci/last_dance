@@ -6,7 +6,7 @@
 /*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/03 04:34:31 by ftroise          ###   ########.fr       */
+/*   Updated: 2024/04/06 17:16:26 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,6 @@ static char	*get_suffix(char *copy)
 	return (suffix);
 }
 
-int	find_matches(char *wildcard, char *nam)
-{
-	char	*prefix;
-	char	*suffix;
-	char	*copy;
-
-	copy = ft_strdup(wildcard);
-	prefix = get_prefix(copy);
-	suffix = get_suffix(copy);
-	if (prefix != NULL && ft_strncmp(nam, prefix, ft_strlen(prefix)) != 0)
-		return (free(copy), 1);
-	if (suffix != NULL && my_strcmp(nam + ft_strlen(nam)
-			- ft_strlen(suffix), suffix) != 0)
-		return (free(copy), 1);
-	free(copy);
-	return (0);
-}
-
 /*static int	find_matches(char *wildcard, char *nam)
 {
 	char	*prefix;
@@ -100,7 +82,8 @@ int	find_matches(char *wildcard, char *nam)
 	}
 	if (prefix != NULL && ft_strncmp(nam, prefix, ft_strlen(prefix)) != 0)
 		return (free(copy), 1);
-	if (sufx != NULL && my_strcmp(nam + ft_strlen(nam) - ft_strlen(sufx), sufx) != 0)
+	if (sufx != NULL && my_strcmp(nam + ft_strlen(nam)
+			- ft_strlen(sufx), sufx) != 0)
 		return (free(copy), 1);
 	return (free(copy),0);
 }*/
@@ -173,7 +156,7 @@ static char	**allocate_matrix(int max_matrix)
 	}
 	return (matrix);
 }
-//----------------------------------------------------- fill matrix la divido in 2
+//---------------------- fill matrix la divido in 2
 
 static char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 {
@@ -204,8 +187,10 @@ static char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 	return (matrix);
 }
 
-//preticamente qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
-static char **allocate_and_check_wildcards(DIR *directory, char *wildcard, int max_matrix)
+//preticamente qui riwmpiamo la matrice e chiamiamo
+allocate... dove allochiamo la memoria 
+static char **allocate_and_check_wildcards(DIR *directory, 
+char *wildcard, int max_matrix)
 {
 	char	**matrix = allocate_matrix(max_matrix);
 	if (matrix == NULL)
@@ -223,7 +208,8 @@ static char **allocate_and_check_wildcards(DIR *directory, char *wildcard, int m
 
 static char **fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 {
-	char	**matrix = allocate_and_check_wildcards(directory, wildcard, max_matrix);
+	char	**matrix = allocate_and_check_wildcards
+		(directory, wildcard, max_matrix);
 	if (matrix == NULL)
 		return NULL;
 	struct	dirent *entry;
@@ -248,7 +234,7 @@ static char **fill_matrix(DIR *directory, char *wildcard, int max_matrix)
     matrix[count] = NULL;
     return matrix;
 }*/
-//--------------------------------------------------------------------------------------
+//-------------------------------
 char	**expansion_wildcard(char *wildcard)
 {
 	DIR		*directory;

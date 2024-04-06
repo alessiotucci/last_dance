@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollars_support.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 17:04:33 by ftroise           #+#    #+#             */
+/*   Updated: 2024/04/06 17:13:52 by ftroise          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-static  char *expansion_dollary_helper(char *key, char **env)
+static char	*expansion_dollary_helper(char *key, char **env)
 {
 	int		i;
 	int		key_len;
@@ -33,25 +45,27 @@ char	*expansion_dollary(char *dollar, char **env)
 	}
 	else
 		key = ft_strdup(new_dollar);
-	
-	return expansion_dollary_helper(key, env);
+	return (expansion_dollary_helper(key, env));
 }
 
-/*qua facciamo la sostituzione effettiva ma infondo non è tanto doversa da quella tutta intera */
-static void replace_all(char *result, char *str, char *substr, char *replacement)
+/*qua facciamo la sostituzione non è tanto doversa da quella tutta intera */
+static void	replace_all(char *result, char *str,
+	char *substr, char *replacement)
 {
-	char *ins;
-	int len_front;
-	size_t len_substr = ft_strlen(substr);
-	size_t len_replacement = ft_strlen(replacement);
+	char	*ins;
+	int		len_front;
+	size_t	len_substr;
+	size_t	len_replacement;
 
+	len_replacement = ft_strlen(replacement);
+	len_substr = ft_strlen(substr);
 	while (*str)
 	{
 		ins = strstr(str, substr);
 		if (ins == NULL)
 		{
 			strcpy(result, str);
-			return;
+			return ;
 		}
 		len_front = ins - str;
 		strncpy(result, str, len_front);
@@ -65,18 +79,24 @@ static void replace_all(char *result, char *str, char *substr, char *replacement
 
 static int	count_occurrences(char *str, char *substr)
 {
-	int count = 0;
-	char *tmp = strstr(str, substr);
-	size_t len_substr = ft_strlen(substr);
+	int		count;
+	char	*tmp;
+	size_t	len_substr;
+
+	len_substr = ft_strlen(substr);
+	count = 0;
+	tmp = strstr(str, substr);
 	while (tmp != NULL)
 	{
 		count++;
 		str = tmp + len_substr;
 		tmp = strstr(str, substr);
 	}
-	return count;
+	return (count);
 }
-/*funzione iniziale ho lasciato lo stesso nome  fa i check richiama il conto delle occorrenze chiama replace all  e il return*/
+/*funzione iniziale ho lasciato lo stesso nome  fa i check
+richiama il conto delle occorrenze chiama replace all  e il return*/
+
 char	*replace_substr(char *str, char *substr, char *replacement)
 {
 	char	*result;
@@ -84,15 +104,11 @@ char	*replace_substr(char *str, char *substr, char *replacement)
 
 	if (!str || !substr || ft_strlen(substr) == 0)
 		return (NULL);
-
 	count = count_occurrences(str, substr);
-	result = malloc((strlen(str) + (strlen(replacement) - strlen(substr)) * count + 1) * sizeof(char));
-
+	result = malloc((strlen(str) + (strlen(replacement)
+					- strlen(substr)) * count + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
-
 	replace_all(result, str, substr, replacement);
-
 	return (result);
 }
-
