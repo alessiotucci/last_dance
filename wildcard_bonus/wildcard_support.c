@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard.support.c                                 :+:      :+:    :+:   */
+/*   wildcard_support.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:55:56 by marvin            #+#    #+#             */
-/*   Updated: 2024/04/05 22:55:56 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/06 16:41:27 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,38 @@ static char	**allocate_matrix(int max_matrix)
 	matrix[count] = NULL;
 	return (matrix);
 }*/
-static char **allocate_and_check_wildcards(DIR *directory, char *wildcard, int max_matrix)
+
+static char	**allocate_and_check_wildcards(DIR *directory,
+	char *wildcard, int max_matrix)
 {
-	char	**matrix = allocate_matrix(max_matrix);
+	char			**matrix;
+	struct dirent	*entry;
+
+	matrix = allocate_matrix(max_matrix);
 	if (matrix == NULL)
-		return NULL;
-	struct dirent	*entry = readdir(directory);
-	while (entry != NULL) {
-		if (find_matches(wildcard, entry->d_name) == 0)
-		{
-			break;
-		}
+		return (NULL);
 	entry = readdir(directory);
+	while (entry != NULL)
+	{
+		if (find_matches(wildcard, entry->d_name) == 0)
+			break ;
+		entry = readdir(directory);
 	}
-	return matrix;
+	return (matrix);
 }
 
-char **fill_matrix(DIR *directory, char *wildcard, int max_matrix)
+char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 {
-	char	**matrix = allocate_and_check_wildcards(directory, wildcard, max_matrix);
-	if (matrix == NULL)
-		return NULL;
-	struct	dirent *entry;
-	int	i;
+	char			**matrix;
+	struct dirent	*entry;
+	int				i;
 
+	matrix = allocate_and_check_wildcards(directory, wildcard, max_matrix);
+	if (matrix == NULL)
+		return (NULL);
 	i = 0;
-	
-	while ((entry = readdir (directory)) != NULL)
+	entry = readdir(directory);
+	while (entry != NULL)
 	{
 		if (find_matches (wildcard, entry->d_name) == 0)
 		{
@@ -88,13 +93,12 @@ char **fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 			{
 				perror("Memory allocation failed");
 				free_string_array(matrix);
-				return NULL;
+				return (NULL);
 			}
 		}
 	}
-
-    matrix[i] = NULL;
-    return matrix;
+	matrix[i] = NULL;
+	return (matrix);
 }
 //preticamente qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
 
