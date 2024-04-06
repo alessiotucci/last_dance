@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_env_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alessiotucci   <atucci@student.42>         +#+  +:+       +#+        */
+/*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 21:58:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/06 18:11:24 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* Function to implement the 'unset' built-in*/
 // Function to implement the 'unset' built-in
+/*
 void	minishell_unset(char *var_name, char *envp[])
 {
 	char	**env;
@@ -44,7 +45,46 @@ void	minishell_unset(char *var_name, char *envp[])
 			p++;
 		}
 	}
+}*/
+static char	**find_variable(char *var_name, char *envp[])
+{
+	char	**env;
+
+	env = envp;
+	while (*env != NULL)
+	{
+		if (ft_strncmp(*env, var_name, ft_strlen(var_name)) == 0
+			&& (*env)[ft_strlen(var_name)] == '=')
+			return (env);
+		env++;
+	}
+	return (NULL);
 }
+
+void	minishell_unset(char *var_name, char *envp[])
+{
+	char	**env;
+	int		found;
+	char	**p;
+	char	**variable_location;
+
+	if (var_name == NULL || envp[0] == NULL || envp[0] == NULL)
+		return ;
+	env = envp;
+	found = 0;
+	variable_location = find_variable(var_name, envp);
+	if (variable_location != NULL)
+	{
+		found = 1;
+		p = variable_location;
+		while (*p != NULL)
+		{
+			*p = *(p + 1);
+			p++;
+		}
+	}
+}
+//------------------------------------------
 
 /* If no arguments provided, print the current environment variables
  * we need to double check this case
