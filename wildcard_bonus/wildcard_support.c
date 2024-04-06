@@ -6,7 +6,7 @@
 /*   By: ftroise <ftroise@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 17:01:33 by ftroise           #+#    #+#             */
-/*   Updated: 2024/04/06 17:15:24 by ftroise          ###   ########.fr       */
+/*   Updated: 2024/04/06 17:26:22 by ftroise          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,19 @@ char	**fill_matrix(DIR *directory, char *wildcard, int max_matrix)
 	matrix[i] = NULL;
 	return (matrix);
 }
-//qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
 
-int	find_matches(char *wildcard, char *nam)
+/* this function check wheter a wildcard is valid or not */
+int	valid_wildcard(const char *str)
 {
-	char	*prefix;
-	char	*suffix;
-	char	*copy;
+	int	i;
 
-	copy = ft_strdup(wildcard);
-	prefix = get_prefix(copy);
-	suffix = get_suffix(copy);
-	if (prefix != NULL && ft_strncmp(nam, prefix, ft_strlen(prefix)) != 0)
-		return (free(copy), 1);
-	if (suffix != NULL && my_strcmp(nam + ft_strlen(nam)
-			- ft_strlen(suffix), suffix) != 0)
-		return (free(copy), 1);
-	free(copy);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*')
+			return (1);
+		i++;
+	}
 	return (0);
 }
+//qui riwmpiamo la matrice e chiamiamo allocate... dove allochiamo la memoria 
